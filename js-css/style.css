@@ -1,0 +1,78 @@
+body {
+  min-width:400px;
+  height:500px;
+  overflow-x:hidden;
+}
+.error {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: red;
+	margin-bottom: 0px;
+}
+
+.scrollable{
+	position:inherit; 
+	left:-10px;
+	margin-right:-12px;
+	top:2px;
+	width:366px;
+	height:426px;
+	background-color:#ffffff;
+	overflow:auto;
+}
+
+.dz{
+	border-color: #33CC33;
+}
+
+.ma{
+	border-color: #FF0000;
+}
+
+.borders{
+	border-right-width: medium;
+	border-bottom-width:thin;
+	width: 365px;
+	border-bottom-color:black;
+	border-bottom-style: solid;
+	border-right-style:inset;
+	padding-bottom: 15px;
+	margin-bottom: 5px;
+	margin-right:5px;
+}
+
+.h3-style {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #0000FF;
+	margin-bottom: 0px;
+}
+.author-style {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #8B8675;
+	float:left;
+	margin: 0px 0 0 0;
+}
+
+.date-style {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #8B8675;
+	float:right;
+	margin:0px 15px 0 0;
+}
+
+.description-style {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	margin:2px 15px -13px 5px;
+}
+.url-title-style {
+	text-decoration: none;
+	color: #0000FF !important;
+}
+.url-title-style:visited {
+	text-decoration: none;
+	color: #003366 !important;
+}

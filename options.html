@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<script type="text/javascript" src="js-css/jquery-1.4.1.min.js"></script>
+
+<title>BlogInto options</title>
+<style type="text/css">
+.style1 {
+	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+	clear:both;
+}
+.style3 {
+	background-color: #FFFF00;
+}
+.style5 {
+	vertical-align: baseline;
+	border-style: solid;
+	border-width: 0px;
+}
+.style7 {
+	text-decoration: underline;
+}
+</style>
+
+<script language="javascript" type="text/javascript">
+
+function loadSettings(){
+	  var user = localStorage["user"];
+	  var pwd = localStorage["pwd"];
+	  var pwd_txt = document.getElementById("pwd");
+	  var user_txt = document.getElementById("user");
+
+	  var dz_radio =  document.getElementById("dz_radio");
+	  var ma_radio =  document.getElementById("ma_radio");
+
+	  pwd_txt.value = pwd;
+	  user_txt.value = user;
+	  	  
+	  if (localStorage["default_feed"] != "ma") {		  
+			dz_radio.checked = true;
+			ma_radio.checked = false;
+		}
+	  else{
+			dz_radio.checked = false;
+			ma_radio.checked = true;
+	  }
+		
+}
+
+function saveSettings(){
+	  var pwd_txt = document.getElementById("pwd").value;
+	  var user_txt = document.getElementById("user").value;
+	  var dz_radio =  document.getElementById("dz_radio").checked;
+	  var ma_radio =  document.getElementById("ma_radio").checked;
+	  
+	  localStorage["user"] = user_txt;
+	  localStorage["pwd"] = pwd_txt;
+	  localStorage["default_feed"] = (dz_radio == true)? "dz" : "ma";
+	  
+	  $('#options_saved').fadeIn('fast');
+      $('#options_saved').fadeOut(3000);
+
+//	  alert("settings saved ");
+
+}
+</script>
+
+
+
+
+
+</head>
+
+<body style="width:600px;position:absolute;margin-left:200px" onload="loadSettings()">
+
+<div style="margin-left:auto;margin-right:auto;width=600px">
+<h3><span class="style7">BlogInto 1.0 settings :</span> 
+
+<img alt="Bloginy Maroc" src="images/logo.png" height="188" class="style5"   /></h3>
+
+	<p class="style1">
+	Right now &quot;Bloginy Maroc&quot; is in private beta, If you have a username/password 
+please provide them bellow in order to read the feed, otherwise, the feed will 
+be available automatically when the website becomes public.</p>
+<hr/>
+
+<div class="style1">
+<p>Username :&nbsp;&nbsp;&nbsp;&nbsp; <input name="user" id="user" type="text" style="width: 185px" /></p>
+<p>Password :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="pwd" id="pwd" style="width: 185px" type="password" />
+</p>
+	<p>Default feed : <input name="default_feed" id="dz_radio" type="radio" /> "Algérie"<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	                  <input name="default_feed" id="ma_radio" type="radio" />
+	&quot;Maroc&quot;</p>
+	<p><input name="Button1" type="button" value="Save Settings" onclick="saveSettings()" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <button onclick="window.close();">Close</button>
+	<p>
+	<span id="options_saved" class="style3" style="display:none;">Options saved! The extension has been refreshed.</span>
+	</p>
+</p>
+</div>
+</div>
+
+</body>
+
+</html>
