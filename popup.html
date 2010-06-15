@@ -9,9 +9,15 @@
 <script type="text/javascript">
   $(document).ready(function() {
   		var selectedTab = (localStorage["default_feed"] != "ma")? "dz" : "ma";
-  		var ma_url = "http://www.bloginy.ma/api/topFeeds/oWxPfPyUkAb5q3aL/bloginto";
+  		var ma_url = "http://bloginy.ma/api/topFeeds/oWxPfPyUkAb5q3aL/bloginto";
   		var dz_url = "http://www.bloginy.com/api/topFeeds/7RaLaXvDsZhBcYhS/bloginto";
-  		
+		
+		function IsNumeric(input)
+		{
+		   return (input - 0) == input && input.length > 0;
+		}
+		var timeout_ = IsNumeric(localStorage["timeout"]) ? localStorage["timeout"] : 10;
+		
 		// returns the selected tab "dz" for "Bloginy Algérie", "ma" for "Bloginy Maroc"
 	    function getSelectedTab(s){
 	   		var i = (s.toString()).lastIndexOf("#");
@@ -36,9 +42,9 @@
 			var defaultFeed = (localStorage["default_feed"] != "ma")? "dz" : "ma";
 			
 			if (defaultFeed == "dz")
-				   	  ajaxIt(dz_url, "dz", true);
+				   	  ajaxIt(dz_url, "dz", false);
 				else
-				   	  ajaxIt(ma_url, "ma", true);
+				   	  ajaxIt(ma_url, "ma", false);
 		}
 		
 		function getDefaultFeedIndex(){
@@ -69,7 +75,7 @@
 			var content = document.getElementById(cat);
 			content.innerHTML = "";
 			
-			var url_root = (cat == "dz")? "http://www.bloginy.com" : "http://www.bloginy.ma";
+			var url_root = (cat == "dz")? "" : "http://bloginy.ma";
 			
 			try{
 				var feeds = xml.getElementsByTagName("feed");
@@ -98,22 +104,27 @@
 				$.ajax({
 				  url: url_,
 				  cache: cached,
-				  password: localStorage["pwd"],
-				  username: localStorage["user"],
-				  timeout: (10 * 1000),
+				  timeout: (timeout_ * 1000),
+				  dataType: (category == "dz" ? "xml" : "html"),
 				  success: function(html){
-				  	$("#error").hide();
-					  try{
-					  		if ((html.indexOf("//Bloginy//Bloginy") < 0) || (html.indexOf("<erreur>") > 0))
-					  			throw("Problem loading the feeds");
-							xmlParser = new DOMParser();
-							xmlDocum = xmlParser.parseFromString( html, 'text/xml');
-			  		 	    showFeeds(xmlDocum, category); 
-			  		  }
-			  		  catch(err)
-					  {
-							handleError();
-					  }
+						$("#error").hide();
+						
+						if(category == "dz")
+							showFeeds(html, category); 
+						else
+						{
+							try{
+                                    if ((html.indexOf("bloginy_api") < 0) || (html.indexOf("<erreur>") > 0))
+                                            throw("Problem loading the feeds");
+                                    xmlParser = new DOMParser();
+                                    xmlDocum = xmlParser.parseFromString( html, 'text/xml');
+                                    showFeeds(xmlDocum, category); 
+                                    }
+                            catch(err)
+                                {
+                                    handleError();
+                                }
+						}
 				  },
 				  error: function(xhr, msg, exn){
 						handleError();
@@ -161,6 +172,12 @@
  });
 </script>
 
+<style type="text/css">
+.style1 {
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+</style>
+
 </head>
 
 <body>
@@ -168,10 +185,10 @@
 
 <a href="#" id="options"><img src="images/settings.png" title="Settings"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<a href="http://www.martani.net/" target="_blank"><img src="images/home.png" title="The author's website -martani.net-"/></a>
+<!--<a href="http://www.martani.net/" target="_blank"><img src="images/home.png" title="The author's website -martani.net-"/></a>-->
 
 <img id="loadingDiv" src="images/loading.gif" alt="loading" title="loading"/>
-
+<span style="float:right" class="style1">Bloginto|</span>
 <div id="tabs">
     <ul>
         <li><a href="#dz" ><span>&nbsp;&nbsp;Bloginy Algérie&nbsp;&nbsp;</span></a></li>
