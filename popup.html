@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+		
+		<title>Bloginto</title> 
+		
+		<link type="text/css" href="jquery/css/redmond/jquery-ui-1.8.4.custom.css" rel="stylesheet">
+		<link type="text/css" href="js-css/jScrollPane.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="jquery/js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="jquery/js/jquery-ui-1.8.4.custom.min.js"></script>	
+
+		<link type="text/css" href="js-css/style.css" rel="stylesheet" />
+		<script type="text/javascript" src="js-css/jquery.urlshortener.js"></script>
+		<script type="text/javascript" src="js-css/script.js"></script>
+		<script type="text/javascript" src="js-css/bloginy-voting.js"></script>
+	</head> 
+	
+	<body> 
+		<button title="Refresh the current feed" id="refresh"><span class="ui-icon ui-icon-refresh"></span></button>
+		<button title="Settings" id="options"><span class="ui-icon ui-icon-wrench"></span></button>
+		<button title="Show / Hide read posts" id="show-hide"><span class="ui-icon ui-icon-carat-2-n-s"></span></button>
+		
+		<img id="loadingDiv" style="margin-left:20px;" src="images/loading.gif" alt="loading" title="loading"/>
+		<span style="float:right;">Bloginto|</span>
+		
+		<!-- Tabs --> 
+		
+		<div id="tabs"> 
+			<ul> 
+				<li style="width:49%;"><a href="#dz">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bloginy <span name="lbl" caption="algeria"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li> 
+				<li style="width:49.5%;"><a href="#ma">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bloginy <span name="lbl" caption="morocco"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li> 
+			</ul> 
+			<div id="dz" class="scrollable">
+			</div> 
+			<div id="ma" class="scrollable">
+			</div> 
+		</div>  
+		
+		<div id="error" title="Error while loading the feed"> 
+			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+				<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+				<strong><span name="lbl" caption="error"/></strong> <span name="lbl" caption="while_loading_the_feed"></span><br/><br/>
+				<span name="lbl" caption="slow_network"></span>
+				</p> 
+			</div> 
+		</div> 
+		
+		<div id="password-error" title="Error while voting"> 
+			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+				<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+				<strong><span name="lbl" caption="failed_to_vote"/></strong><span name="lbl" caption="verify_correct_password"></span> <br/><br/>
+				<span name="lbl" caption="login_from_the_website"></span>
+				</p> 
+			</div> 
+		</div>
+	</body> 
+</html>

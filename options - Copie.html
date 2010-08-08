@@ -1,0 +1,340 @@
+<html>
+<head>
+<link type="text/css" href="jquery/css/redmond/jquery-ui-1.8.4.custom.css" rel="stylesheet">
+<script type="text/javascript" src="jquery/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="jquery/js/jquery-ui-1.8.4.custom.min.js"></script>
+
+<script type="text/javascript" src="js-css/bloginy-voting.js"></script>
+
+<title>BlogInto options</title> 
+
+<style type="text/css">
+	body{ font: 80% "Trebuchet MS", sans-serif;}
+	#main-container {width:700px;  margin-left: auto ; margin-right: auto ;}
+	.slider { width: 450px; padding: 5px !important;}
+	.slider p label {font-size: 1.1em;}
+	#selectable-label { font-size: 1.1em; float:left; margin-right:10px;  vertical-align:top; display:table-cell;}
+</style>
+
+<script type="text/javascript">
+	var defaultCountry, defaultTimeout, defaultUnreadTimeout, defaultShowHide;
+	
+	function IsNumeric(input)
+	{
+	   return (input - 0) == input && input.length > 0;
+	}
+	
+	function initLang(){
+		var lang = localStorage["lang"] || 'en';
+		var l = chrome.extension.getBackgroundPage().getLanguageResources()[lang];
+		
+	}
+	
+	function loadSettings(){
+		defaultCountry = (localStorage["default_feed"] != "ma")? 'dz' : 'ma';
+		defaultShowHide = (localStorage["default_show_hide"] != "show")? 'hide' : 'show';
+		defaultTimeout = IsNumeric(localStorage["timeout"]) ? localStorage["timeout"] : 20;
+		defaultUnreadTimeout = IsNumeric(localStorage["unread_timeout"]) ? localStorage["unread_timeout"] : 2;
+		
+		$("#user-dz").val(localStorage["user-dz"] || "");
+		$("#user-ma").val(localStorage["user-ma"] || "");
+		$("#pass-dz").val(localStorage["pass-dz"] || "");
+		$("#pass-ma").val(localStorage["pass-ma"] || "");
+	}
+	
+	function sanitizeInput(country, show_hide, timeout, unread_timeout){
+		if(country != 'dz' && country != 'ma')
+			return false;
+		
+		if(show_hide != 'show' && show_hide != 'hide')
+			return false;
+			
+		if(!IsNumeric(timeout) || (timeout <2 && timeout > 60))
+			return false;
+
+		if(!IsNumeric(unread_timeout) || (unread_timeout <1 && unread_timeout > 30))
+			return false;
+
+		return true;
+	}
+	
+	function saveSettings(){
+		defaultCountry = $("input[name='radio-country']:checked").val();
+		defaultShowHide = $("input[name='radio-show-hide']:checked").val();
+		
+		defaultTimeout = $("#request-timeout-slider").slider("value").toString();
+		defaultUnreadTimeout = $("#unread-timeout-slider").slider("value").toString();
+		
+		if(sanitizeInput(defaultCountry, defaultShowHide, defaultTimeout, defaultUnreadTimeout)){
+			localStorage["default_feed"] = defaultCountry;
+			localStorage["default_show_hide"] = defaultShowHide;
+			localStorage["timeout"] = defaultTimeout;
+			localStorage["unread_timeout"] = defaultUnreadTimeout;
+
+			localStorage["user-dz"] = $("#user-dz").val();
+			localStorage["user-ma"] = $("#user-ma").val();
+			localStorage["pass-dz"] = $("#pass-dz").val();
+			localStorage["pass-ma"] = $("#pass-ma").val();
+			
+			$('#saved-notification').fadeIn('fast');
+			$('#saved-notification').fadeOut(3000);
+			
+			chrome.extension.getBackgroundPage().updateBadgeText();
+		}
+		else{
+			$('#error-notification').fadeIn('fast');
+			$('#error-notification').fadeOut(3000);
+		}
+	}
+	
+	function getCountryFromIndex(index){
+		if(index == 1)
+			return 'ma';
+		
+		return 'dz';
+	}
+	
+	function getShowHideFromIndex(index){
+		if(index == 1)
+			return 'hide';
+			
+		return 'show';
+	}
+	
+$(document).ready(function() {
+		
+	loadSettings();
+	//$("<br/>").appendTo('.slider');
+		
+	$(function() {
+		$("#request-timeout-slider").slider({
+			value: defaultTimeout,
+			min: 4,
+			max: 60,
+			step: 2,
+			slide: function(event, ui) {
+				$("#request-timeout").text(ui.value + ' seconds');
+				//defaultTimeout = ui.value;
+			}
+		});
+		
+		$("#request-timeout-slider").css('height', '0.6em');
+		$("#request-timeout-slider > a").css('height', '1.0em');
+		$("#request-timeout").text($("#request-timeout-slider").slider("value") + ' seconds');
+	});
+	
+	$(function() {
+		$("#unread-timeout-slider").slider({
+			value: defaultUnreadTimeout,
+			min: 1,
+			max: 30,
+			step: 2,
+			slide: function(event, ui) {
+				$("#unread-timeout").text(ui.value + ' minutes');
+				//defaultUnreadTimeout = parseInt(ui.value, 10);
+			}
+		});
+		
+		$("#unread-timeout-slider").css('height', '0.6em');
+		$("#unread-timeout-slider > a").css('height', '1.0em');
+		$("#unread-timeout").text($("#unread-timeout-slider").slider("value") + ' minutes');
+	});
+
+	//select the default country / show-hide
+	var country_order = defaultCountry == 'dz' ? 'first' : 'last';
+	$("#radio-country > input:" + country_order).attr('checked', 'checked');
+		
+	var show_hide_order = defaultShowHide == 'show' ? 'first' : 'last';
+	$("#radio-show-hide > input:" + show_hide_order).attr('checked', 'checked');
+	
+	$(function() {
+		$("#radio-country").buttonset();
+	});
+	
+	$(function() {
+		$("#radio-show-hide").buttonset();
+	});
+	//defaultCountry = getCountryFromIndex(index);
+	
+	$(function() {
+		$("#close").button();
+		
+		$("#close").click(function() { window.close(); return false; });
+		
+		$("#save").button();
+		
+		$("#save").click(function(){
+			saveSettings();
+		});
+	});
+	
+	// Accordion
+	$("#accordion").accordion({ header: "h3", active: (defaultCountry == 'dz'?0:1) });
+	$("#check-login-dz, #check-login-ma").button({
+		icons: {
+                primary: 'images/check.png'
+            }
+	});
+	
+	$("#check-login-dz").click(function(){
+		var bloginy = new Bloginy($("#user-dz").val(), $("#pass-dz").val(), "http://bloginy.com");
+		function assert_login(arg){
+			if(arg){
+				$("#dz-login-result").css('color', 'green').text('Logged in ;)');
+					localStorage["user-dz"] = $("#user-dz").val();
+					localStorage["user-ma"] = $("#user-ma").val();
+					localStorage["pass-dz"] = $("#pass-dz").val();
+					localStorage["pass-ma"] = $("#pass-ma").val();
+				}
+			else
+				$("#dz-login-result").css('color', 'red').text('Failed to login');
+		}
+		bloginy.connect(function(a){bloginy.isUserLoggedIn(assert_login);});
+	});
+	
+	$("#check-login-ma").click(function(){
+		var bloginy = new Bloginy($("#user-ma").val(), $("#pass-ma").val(), "http://bloginy.ma");
+		function assert_login(arg){
+			if(arg){
+				$("#ma-login-result").css('color', 'green').text('Logged in ;)');
+				localStorage["user-dz"] = $("#user-dz").val();
+				localStorage["user-ma"] = $("#user-ma").val();
+				localStorage["pass-dz"] = $("#pass-dz").val();
+				localStorage["pass-ma"] = $("#pass-ma").val();	
+			}
+			else
+				$("#ma-login-result").css('color', 'red').text('Failed to login');
+		}
+		bloginy.connect(function(a){bloginy.isUserLoggedIn(assert_login);});
+	});
+	
+	$('.loading')
+	    .hide()  // hide it initially
+	    .ajaxStart(function() {
+	        $(this).show();
+	    })
+	    .ajaxStop(function() {
+	        $(this).hide();
+	    });
+});
+</script>
+
+</head>
+
+<body>
+<div id="main-container">
+	<div style="float:right">
+		<img src="images/logo.png" height="142" width="262"/>
+	</div>
+	
+	<div class="slider">
+		<h2>Bloginto <span name="lbl" caption="settings"/> : </h2>
+		<br/>
+		<p id="selectable-label">
+			Default feed : 
+		</p>
+		<form>
+			<div id="radio-country">
+				<input type="radio" id="radioAlgeria" name="radio-country" value="dz"/><label for="radioAlgeria">Algeria</label>
+				<input type="radio" id="radioMorocco" name="radio-country" value="ma"/><label for="radioMorocco">Morocco</label>
+			</div>
+		</form>
+	</div>
+	
+	<div class="slider">
+		<div id="accordion"> 
+			<div> 
+				<h3><a href="#">(Algeria) Username & Password</a></h3> 
+				<div>
+					<table>
+						<tr>
+							<td style="height:10px; padding: 0px; margin: 0px;">User </td>
+							<td style="height:10px; padding: 0px; margin: 0px;"><input type="input" id="user-dz" size=20/></td>
+							<td style="height:10px; padding: 0px; margin: 0px;width:190px"><img class="loading" src="images/loading.gif"/><button id="check-login-dz" style="height:30px; float:right">Verify</button></td>
+						</tr>
+						<tr>
+							<td style="height:10px; padding: 0px; margin: 0px;">Password</td>
+							<td style="height:10px; padding: 0px; margin: 0px;"><input type="password" id="pass-dz" size=20/></td>
+							<td style="height:10px; padding: 0px; margin: 0px;">
+								<span id="dz-login-result"></span>
+							</td>
+						</tr>
+					</table>
+				</div> 
+			</div> 
+			<div> 
+				<h3><a href="#">(Morocco) Username & Password</a></h3> 
+				<div>
+					<table>
+						<tr>
+							<td style="height:10px; padding: 0px; margin: 0px;">User </td>
+							<td style="height:10px; padding: 0px; margin: 0px;"><input type="input" id="user-ma" size=20/></td>
+							<td style="height:10px; padding: 0px; margin: 0px;width:180px"><img class="loading" src="images/loading.gif"/><button id="check-login-ma" style="height:30px; float:right">Verify</button></td>
+						</tr>
+						<tr>
+							<td style="height:10px; padding: 0px; margin: 0px;">Password</td>
+							<td style="height:10px; padding: 0px; margin: 0px;"><input type="password" id="pass-ma" size=20/></td>
+							<td style="height:10px; padding: 0px; margin: 0px;">
+								<span id="ma-login-result"></span>
+							</td>
+						</tr>
+					</table>
+				</div> 
+			</div> 	
+		</div> 
+	</div>
+	
+	<div class="slider">
+		<p>
+			<label for="request-timeout">Request Timeout : </label>
+			<span id="request-timeout" style="border:0; color:#f6931f; font-weight:bold;" />
+		</p>
+		<div id="request-timeout-slider"></div>
+	</div>
+	
+	<div class="slider">
+		<p>
+			<label for="unread-timeout">Fetch posts each : </label>
+			<span id="unread-timeout" style="border:0; color:#f6931f; font-weight:bold;" />
+		</p>
+		<div id="unread-timeout-slider"></div>
+	</div>
+
+	<div class="slider">
+		<p id="selectable-label">
+			Read feeds are to be : 
+		</p>
+
+		<form>
+			<div id="radio-show-hide" >
+				<input type="radio" id="radioShow" name="radio-show-hide" value="show"/><label for="radioShow">Just marked</label>
+				<input type="radio" id="radioHide" name="radio-show-hide" value="hide"/><label for="radioHide">Hidden</label>
+			</div>
+		</form>
+	</div>
+
+	<a href="http://www.martani.net/" target="_blank" style="float:right; position:inherit;">
+		http://martani.net 
+	</a>
+	<div class="slider">
+		<button id="save"  style="width:250px;">Save settings</button>
+		<button id="close" style="float:right;width:150px;">Close this</button>
+
+		<div class="ui-widget" id="saved-notification" style="display:none;"> 
+			<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+				<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span> 
+				<strong>Options saved</strong> enjoy :)</p> 
+			</div>
+		</div>
+		<div class="ui-widget" id="error-notification" style="display:none;"> 
+			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+				<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+				<strong>Error:</strong> cannot save settings, please try again.</p> 
+			</div> 
+		</div>
+	</div>
+		
+	
+</div>
+	
+</body>

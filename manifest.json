@@ -1,0 +1,20 @@
+{
+  "name": "Bloginto for Chrome",
+  "version": "2.0",
+  "description": "The official feed reader for Bloginy.com (Algeria) and Bloginy.ma (Morocco), available as an app for windows on http://martani.net.",
+  "icons": { "48": "images/icon128.png",
+          "128": "images/icon128.png" },
+  "browser_action": {
+    "default_icon": "images/icon.ico",
+    "popup": "popup.html",
+	"default_title": "Bloginto for Chrome"
+  },
+  "options_page": "options.html",
+  "background_page": "background.html",
+  "permissions": [
+    "tabs",
+	"http://bloginy.com/",
+	"http://bloginy.ma/",
+	"http://api.bit.ly/"
+  ]
+}

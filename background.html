@@ -1,0 +1,202 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Windows-1256" /> 
+
+<script type="text/javascript" src="jquery/js/jquery-1.4.2.min.js"></script>
+
+<script>
+	// Language files
+	
+	function getLanguageResources(){
+		var fr = new Array(); var en = new Array(); var ar = new Array();
+		fr['settings'] = "paramètres"; en['settings'] = "settings"; ar['settings'] = "إعدادات";
+		fr['default_feed'] = "Flux par défaut"; en['default_feed'] = "Default feed"; ar['default_feed'] = "الموقع المفضل";
+		fr['algeria_user_pass'] = "(Algérie) Utilisateur & Mot de passe"; en['algeria_user_pass'] = "(Algeria) Username & Password"; ar['algeria_user_pass'] = "(الجزائر) اسم المستخدم و كلمة المرور";
+		fr['morocco_user_pass'] = "(Marroc) Utilisateur & Mot de passe"; en['morocco_user_pass'] = "(Morocco) Username & Password"; ar['morocco_user_pass'] = "(المغرب) اسم المستخدم و كلمة المرور";
+		
+		fr['request_timeout'] = "Temps de réponse de la requête :"; en['request_timeout'] = "Request timeout :"; ar['request_timeout'] = "مدة الاستجابة :";
+		fr['fetch_posts_each'] = "Récupère les messages chaque :"; en['fetch_posts_each'] = "Fetch posts each :";  ar['fetch_posts_each'] = "تحديث الرسائل كل :";
+		fr['read_feeds_are_to_be'] = "Afficher / Masquer les messages lus :"; en['read_feeds_are_to_be'] = "Read feeds are to be :"; ar['read_feeds_are_to_be'] = "إظهار/إخفاء الرسائل المقروءة :";
+		fr['just_marked'] = " Afficher"; en['just_marked'] = "Just marked"; ar['just_marked'] = "إظهار";
+		fr['hidden'] = "Masquer"; en['hidden'] = " Hidden"; ar['hidden'] = "إخفاء";
+		
+		fr['seconds'] = " secondes"; en['seconds'] = "seconds"; ar['seconds'] = "ثانية";
+		fr['minutes'] = "minutes"; en['minutes'] = "minutes"; ar['minutes'] = "دقائق";
+		
+		fr['save_settings'] = "Enregistrer les paramètres"; en['save_settings'] = "Save settings"; ar['save_settings'] = "حفظ الإعدادات";
+		fr['close_this'] = "Fermer"; en['close_this'] = "Close this"; ar['close_this'] = "إغلاق";
+		
+		fr['user'] = "Nom "; en['user'] = "User "; ar['user'] = "اسم المستخدم";
+		fr['pass'] = "Mot de passe "; en['pass'] = "Password"; ar['pass'] = "كلمة المرور";
+		
+		fr['verify'] = "Vérifier"; en['verify'] = "verify"; ar['verify'] = "تجربة";
+		fr['loggin_successeful'] = "Connecté ;)"; en['loggin_successeful'] = "Logged in ;)"; ar['loggin_successeful'] = "متصل ;)";
+		fr['failed_to_login'] = "Echec :("; en['failed_to_login'] = "Failed to login"; ar['failed_to_login'] = "فشل محاولة الاتصال";
+		
+		fr['algeria'] = "Algérie"; en['algeria'] = "Algeria"; ar['algeria'] = "الجزائر";
+		fr['morocco'] = "Maroc"; en['morocco'] = "Morroco"; ar['morocco'] = "المغرب";
+		
+		fr['options_saved'] = "Parametres sauvegardées"; en['options_saved'] = "Options saved"; ar['options_saved'] = "تم حفظ الخيارات";
+		fr['enjoy'] = " enjoy ;)"; en['enjoy'] = " enjoy ;)"; ar['enjoy'] = "  enjoy ;)";
+		
+		fr['error'] = "Erreur "; en['error'] = "Error "; ar['error'] = "خطأ";
+		fr['cannot_save_settings'] = " Paramatres non enregistrées, veillez esseyer à nouveau"; en['cannot_save_settings'] = " cannot save settings, please try again."; ar['cannot_save_settings'] = " أثناء حفظ الإعدادات يرجى المحاولة مجددا ";
+		
+		fr['while_loading_the_feed'] = " lors du chargement du flux, Veuillez vérifier votre connection réseau"; en['while_loading_the_feed'] = " while loading the feed, Make sure you are connected to Internet."; ar['while_loading_the_feed'] = "أثناء تحميل البيانات، يرجى التأكد من  ان الجهاز متصل بالشبكة";
+		fr['slow_network'] = "Si vous avez une lente connexion, essayez de modifier le délai d'attente dans la page des paramètres."; en['slow_network'] = " If you have a slow network speed, try changing the timeout in the settings page."; ar['slow_network'] = "إذا كان اتصالكم بالشبكة بطيئ، حاول تغيير مدة الاستجابة في صفحة الإعدادات";
+		fr['failed_to_vote'] = "Erreur lors du sondage "; en['failed_to_vote'] = "Failed to vote "; ar['failed_to_vote'] = "خطأ أثناء التصويت ";
+		fr['verify_correct_password'] = " veuillez vérifier que vous avez saisi le bon mot de passe dans la page des paramètres"; en['verify_correct_password'] = "Please verify that you have provided the correct password in the options page."; ar['verify_correct_password'] = " يرجى التأكد من صحة كلمة المرور في صفحة الإعدادات";
+		fr['login_from_the_website'] = "Ou naviguez directement à Bloginy et connectez vous sur le site."; en['login_from_the_website'] = "Or navigate diretly to Bloginy and login from the website."; ar['login_from_the_website'] = " أو يمكنكم تسجيل الدخول مباشرة عبر موقع Bloginy";
+		
+		fr['ok'] = "Fermer"; en['ok'] = "Close"; ar['ok'] = "إغلاق";
+		fr['btn_parameters_dialog'] = "Paramètres"; en['btn_parameters_dialog'] = "Settings"; ar['btn_parameters_dialog'] = "إعدادات";
+		fr['btn_go_to_bloginy'] = "Connecter sur Bloginy"; en['btn_go_to_bloginy'] = "Connect on Bloginy"; ar['btn_go_to_bloginy'] = "تسجيل الدخول على Bloginy";
+		
+		fr['tt_show-hide'] = "Afficher / Masquer les messages lus"; en['tt_show-hide'] = "Show / Hide read posts"; ar['tt_show-hide'] = "إخفاء - إظهار الرسائل المقروءة";
+		fr['tt_refresh'] = "Actualiser"; en['tt_refresh'] = "Refresh"; ar['tt_refresh'] = "تحديث";
+		fr['tt_options'] = "Paramètres"; en['tt_options'] = "Settings"; ar['tt_options'] = "إعدادات";
+		
+		var resources = new Array();
+		resources['fr'] = fr;
+		resources['en'] = en;
+		resources['ar'] = ar;
+		
+		return resources;
+	}
+	
+	function getDzUrl(){
+		return "http://bloginy.com/api/topFeeds/7RaLaXvDsZhBcYhS/bloginto";
+	}
+	
+	function getMaUrl(){
+		return "http://bloginy.ma/api/topFeeds/oWxPfPyUkAb5q3aL/bloginto";
+	}
+	
+	function IsNumeric(input)
+	{
+	   return (input - 0) == input && input.length > 0;
+	}
+		
+	function isPostRead(title, feed){
+		var read_posts = new Array();
+
+		if(localStorage.getItem('read_posts_' + feed) != null)
+			read_posts = JSON.parse(localStorage.getItem('read_posts_' + feed));
+		else
+			read_posts = null;
+
+		var i;
+			
+		if(read_posts != null)
+			for(i=0; i<read_posts.length; i++)
+			{
+				if(title == read_posts[i])
+					return true;
+			}
+		
+		return false;
+	}
+		
+	function deleteOldPostsFromLocalStorage(arr_titles, feed){
+		var new_arr = new Array();
+				
+		for(var i=0; i<arr_titles.length; i++){
+			var title = arr_titles[i];
+			if(isPostRead(title, feed))
+				new_arr.push(title);
+		}
+				
+		localStorage.setItem('read_posts_' + feed, JSON.stringify(new_arr));
+	}
+
+	function showUnreadPostsCount(xml, category){
+		var unread_count = 0;
+		var titles = new Array();
+		
+		try{
+				var feeds = xml.getElementsByTagName("feed");
+				for (var i = 0, feed; feed = feeds[i]; i++) {
+					var title = feed.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+					
+					var title_txt = $('<a>' + title + '</a>').text().substring(0, 50);
+					
+					titles.push(title_txt);
+				}
+				
+				deleteOldPostsFromLocalStorage(titles, category);
+				
+				for(var i=0; i<titles.length; i++)
+					if(!isPostRead(titles[i], category))
+						unread_count++;
+					
+				localStorage["unread_count_" + category] = unread_count;
+				chrome.browserAction.setBadgeText({text: unread_count.toString()});
+		}
+		catch(error){
+			console.log('error foreach every feed');
+			chrome.browserAction.setBadgeText({text: '?'});
+		}
+	}
+	
+	function updateBadgeText(){
+		console.log('updating unread posts count');
+		var defaultFeed = (localStorage["default_feed"] != "ma")? "dz" : "ma";
+		var timeout_ = IsNumeric(localStorage["timeout"]) ? localStorage["timeout"] : 10;
+		
+		$.ajax({
+				  url: (defaultFeed == 'dz') ? getDzUrl() : getMaUrl(),
+				  cache: false,
+				  timeout: (timeout_ * 1000),
+				  dataType: (defaultFeed == "dz" ? "xml" : "html"),
+				  success: function(html){
+						if(defaultFeed == "dz")
+							showUnreadPostsCount(html, defaultFeed); 
+						else
+						{
+							try{
+                                    if ((html.indexOf("bloginy_api") < 0) || (html.indexOf("<erreur>") > 0))
+                                            throw("Problem loading the feeds");
+                                    xmlParser = new DOMParser();
+                                    xmlDocum = xmlParser.parseFromString(html, 'text/xml');
+                                    showUnreadPostsCount(xmlDocum, defaultFeed); 
+                                }
+                            catch(err)
+                                {
+									console.log('error parsing the feed');
+                                    chrome.browserAction.setBadgeText({text: '?'});
+                                }
+						}
+				  },
+				  error: function(xhr, msg, exn){
+					console.log('error at the ajax call');
+						chrome.browserAction.setBadgeText({text: '?'});
+				  }
+				});	
+	}
+	
+	function checkIfIntervalTimeoutChanged(){
+		console.log('chacking for interval change...');
+		if(IsNumeric(localStorage["unread_timeout"]) && localStorage["unread_timeout"] != interval){
+			console.log('interval changed, refreshing...')
+			clearInterval(intervalID);
+			interval = localStorage["unread_timeout"];
+			intervalID = setInterval(updateBadgeText, interval * 60 * 1000);
+		}
+	}
+	
+	var intervalID;
+	var interval = IsNumeric(localStorage["unread_timeout"]) ? localStorage["unread_timeout"] : 2;
+	
+	updateBadgeText();
+	
+	if(localStorage['first_load'] != 'true')
+	{
+		chrome.tabs.create({url : "options.html"});
+		localStorage['first_load'] = 'true';
+	}
+	
+	intervalID = setInterval(updateBadgeText, interval * 60 * 1000);
+	
+	//every 15 seconds check if the interval for fetching the unread count as changed or not and update the intervalID
+	setInterval(checkIfIntervalTimeoutChanged, 15 * 1000);
+</script>
+</head>
