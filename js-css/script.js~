@@ -52,7 +52,7 @@ function getDefaultFeedIndex(){
 
 function getRootUrl(category){
 	if(category == 'dz')
-		return 'http://www.bloginy.com';
+		return 'http://bloginy.com';
 	else
 		return 'http://bloginy.ma';
 }

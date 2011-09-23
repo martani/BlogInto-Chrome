@@ -64,7 +64,7 @@
 	}
 	
 	function getDzUrl(){
-		return "http://bloginy.com/api/topFeeds/7RaLaXvDsZhBcYhS/bloginto";
+		return "http://www.bloginy.com/api/topFeeds/7RaLaXvDsZhBcYhS/bloginto";
 	}
 	
 	function getMaUrl(){
@@ -153,17 +153,17 @@
 						else
 						{
 							try{
-                                    if ((html.indexOf("bloginy_api") < 0) || (html.indexOf("<erreur>") > 0))
-                                            throw("Problem loading the feeds");
-                                    xmlParser = new DOMParser();
-                                    xmlDocum = xmlParser.parseFromString(html, 'text/xml');
-                                    showUnreadPostsCount(xmlDocum, defaultFeed); 
-                                }
-                            catch(err)
-                                {
-									console.log('error parsing the feed');
-                                    chrome.browserAction.setBadgeText({text: '?'});
-                                }
+								if ((html.indexOf("bloginy_api") < 0) || (html.indexOf("<erreur>") > 0))
+									throw("Problem loading the feeds");
+								xmlParser = new DOMParser();
+								xmlDocum = xmlParser.parseFromString(html, 'text/xml');
+								showUnreadPostsCount(xmlDocum, defaultFeed); 
+								}
+							catch(err)
+								{
+													console.log('error parsing the feed');
+								chrome.browserAction.setBadgeText({text: '?'});
+								}
 						}
 				  },
 				  error: function(xhr, msg, exn){

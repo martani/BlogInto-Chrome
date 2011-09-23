@@ -238,7 +238,7 @@ $(document).ready(function() {
 	});
 	
 	$("#check-login-dz").click(function(){
-		var bloginy = new Bloginy($("#user-dz").val(), $("#pass-dz").val(), "http://bloginy.com");
+		var bloginy = new Bloginy($("#user-dz").val(), $("#pass-dz").val(), "http://www.bloginy.com");
 		function assert_login(arg){
 			if(arg){
 				$("#dz-login-result").css('color', 'green').text(login_success);
