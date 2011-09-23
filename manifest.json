@@ -13,7 +13,7 @@
   "background_page": "background.html",
   "permissions": [
     "tabs",
-	"http://bloginy.com/",
+	"http://www.bloginy.com/",
 	"http://bloginy.ma/",
 	"http://api.bit.ly/"
   ]
