@@ -28,7 +28,7 @@ function IsNumeric(input)
 
 //To be used in the backgroud page
 function getDzUrl(){
-	return "http://bloginy.com/api/topFeeds/7RaLaXvDsZhBcYhS/bloginto";
+	return "http://www.bloginy.com/api/topFeeds/7RaLaXvDsZhBcYhS/bloginto";
 }
 function getMaUrl(){
 	return "http://bloginy.ma/api/topFeeds/oWxPfPyUkAb5q3aL/bloginto";
@@ -68,7 +68,8 @@ function getSelectedTab(s){
 }
 		
 // Handles errors during the XMLHttpRequest.
-function handleError() {
+function handleError(msg) {
+	$("#dz").text(msg);
 	$('#error').dialog('open');
 }
 
@@ -295,7 +296,7 @@ function showFeeds(xml, cat) {
 			setTimeout(function(){$('#' + cat + ' .post-read').hide('slow');}, 300);
 				
 	}catch(error){
-		handleError();
+		handleError(error);
 	}
 	
 	$("#" + cat + " > .post:first").css('margin-top', '-15px');
@@ -331,7 +332,7 @@ function ajaxIt(url_, category, cached){
                             showFeeds(xmlDocum, category); 
                     }
                     catch(err){
-                        handleError();
+                        handleError(err);
                     }
 				}
 						
@@ -349,7 +350,8 @@ function ajaxIt(url_, category, cached){
 				});
 		  },
 		  error: function(xhr, msg, exn){
-				handleError();
+			  
+				handleError(msg);
 		  }
 	});	
 }
